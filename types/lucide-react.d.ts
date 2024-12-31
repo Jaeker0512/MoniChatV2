@@ -28,6 +28,7 @@ declare module 'lucide-react' {
   export const Moon: Icon
   export const Menu: Icon
   export const Plus: Icon
+  export const X: Icon
   export const PanelLeftClose: ComponentType<{
     color?: string
     size?: number | string

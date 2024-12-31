@@ -5,7 +5,7 @@ import { useAuth } from '../context/AuthContext'
 import { Chat } from './Chat'
 import { Button } from './ui/button'
 import { ScrollArea } from './ui/scroll-area'
-import { LogOut, MessageCircle, MessageSquare, Settings, Moon, Sun, Menu, Plus } from 'lucide-react'
+import { LogOut, MessageCircle, MessageSquare, Settings, Moon, Sun, Menu, Plus, X } from 'lucide-react'
 import { useTheme } from 'next-themes'
 import { Avatar, AvatarFallback } from './ui/avatar'
 import {
@@ -125,7 +125,7 @@ export function ChatLayout() {
         initial={{ x: -256 }}
         animate={{ x: 0 }}
         transition={{ type: "spring", stiffness: 200, damping: 25 }}
-        className={`${isSidebarCollapsed ? 'w-16' : 'w-64'} bg-gray-100 dark:bg-gray-900 flex flex-col transition-all duration-300`}
+        className={`${isSidebarCollapsed ? 'w-16' : 'w-64'} bg-gray-100 dark:bg-gray-900 flex flex-col transition-all duration-300 relative z-50 border-r shadow-lg`}
       >
         {/* 顶部按钮区域 */}
         <div className="flex items-center p-4">
@@ -153,24 +153,23 @@ export function ChatLayout() {
         
         {/* 历史记录列表 */}
         {!isSidebarCollapsed && (
-          <>
+          <div className="flex flex-col flex-1 overflow-hidden">
             <div className="px-4 py-2">
               <div className="text-sm font-medium text-gray-600 dark:text-gray-300">Recent</div>
             </div>
-            <ScrollArea className="flex-1">
-              <div className="space-y-1 px-2">
+            <div className="flex-1 overflow-y-auto px-2">
+              <div className="space-y-1">
                 {chatHistory.map((chat) => (
                   <div
                     key={chat.id}
                     className={cn(
-                      "flex items-center w-full group",
-                      selectedChat === chat.id ? 'bg-gray-200 dark:bg-gray-800 rounded-md' : ''
+                      "flex items-center w-full rounded-md hover:bg-gray-200 dark:hover:bg-gray-800 group relative",
+                      selectedChat === chat.id ? 'bg-gray-200 dark:bg-gray-800' : ''
                     )}
                   >
                     <div
                       className={cn(
-                        "flex items-center flex-1 px-4 py-3 text-gray-800 dark:text-gray-200 hover:text-gray-900 dark:hover:text-gray-100 cursor-pointer",
-                        selectedChat === chat.id ? 'bg-gray-200 dark:bg-gray-800' : ''
+                        "flex items-center flex-1 px-4 py-3 text-gray-800 dark:text-gray-200 cursor-pointer"
                       )}
                       onClick={() => handleChatSelect(chat.id)}
                     >
@@ -179,32 +178,22 @@ export function ChatLayout() {
                         <div className="font-medium truncate">{chat.title}</div>
                       </div>
                     </div>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="h-6 w-6 text-gray-600 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-400 opacity-0 group-hover:opacity-100 transition-opacity"
-                      onClick={(e) => handleDeleteChat(chat.id, e)}
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className="h-4 w-4"
+                    <div className="absolute right-2 flex items-center">
+                      <button
+                        type="button"
+                        onClick={(e) => handleDeleteChat(chat.id, e)}
+                        className="p-1.5 rounded-md opacity-0 group-hover:opacity-100 hover:bg-red-100 dark:hover:bg-red-900/20"
+                        title="删除对话"
+                        aria-label="删除对话"
                       >
-                        <path d="M3 6h18" />
-                        <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
-                        <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
-                      </svg>
-                    </Button>
+                        <X className="h-4 w-4 text-gray-400 hover:text-red-500 dark:text-gray-600 dark:hover:text-red-400" />
+                      </button>
+                    </div>
                   </div>
                 ))}
               </div>
-            </ScrollArea>
-          </>
+            </div>
+          </div>
         )}
 
         {/* 设置按钮 */}
@@ -237,9 +226,9 @@ export function ChatLayout() {
       </motion.div>
 
       {/* 主内容区域 */}
-      <div className="flex-1 flex flex-col bg-amber-50/30 dark:bg-gray-950">
+      <div className="flex-1 flex flex-col bg-amber-50/30 dark:bg-gray-950 overflow-hidden relative z-0">
         {/* 顶部栏 */}
-        <div className="h-14 flex items-center justify-between px-4">
+        <div className="h-14 flex items-center justify-between px-4 flex-shrink-0 border-b">
           <div className="font-medium text-gray-900 dark:text-gray-100">MoniChat</div>
           <div className="flex items-center gap-2">
             <DropdownMenu>
@@ -272,7 +261,7 @@ export function ChatLayout() {
         </div>
 
         {/* 聊天区域 */}
-        <div className="flex-1">
+        <div className="flex-1 overflow-hidden">
           <Chat 
             key={selectedChat || 'new'} 
             onClear={handleNewChat}

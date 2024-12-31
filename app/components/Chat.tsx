@@ -4,7 +4,6 @@ import { useState, useRef, useEffect } from 'react'
 import { useAuth } from '../context/AuthContext'
 import { Button } from '@/app/components/ui/button'
 import { Input } from '@/app/components/ui/input'
-import { ScrollArea } from '@/app/components/ui/scroll-area'
 import { Card, CardHeader, CardContent } from '@/app/components/ui/card'
 import { Send } from 'lucide-react'
 import { nanoid } from 'nanoid'
@@ -173,43 +172,46 @@ export function Chat({ onClear, chatId, messages: initialMessages = [], onMessag
 
   return (
     <div className="flex flex-col h-full">
-      <ScrollArea className="flex-1 p-4">
-        <div className="space-y-4 max-w-3xl mx-auto">
-          {state.messages.length === 0 ? (
-            <div className="text-center text-muted-foreground py-8">
-              开始新的对话...
-            </div>
-          ) : (
-            state.messages.map((message) => (
-              <Card
-                key={message.id}
-                className={cn(
-                  "overflow-hidden",
-                  message.role === 'user'
-                    ? 'ml-12 bg-primary text-primary-foreground'
-                    : 'mr-12 bg-muted'
-                )}
-              >
-                <CardHeader className="py-3 px-4">
-                  <div className="font-medium text-sm">
-                    {message.role === 'user' ? user.username : 'AI助手'}
-                  </div>
-                </CardHeader>
-                <CardContent className="py-3 px-4 pt-0">
-                  <div className="whitespace-pre-wrap">
-                    {message.content || (message.role === 'assistant' && state.isLoading && '▋')}
-                  </div>
-                </CardContent>
-              </Card>
-            ))
-          )}
-          {state.error && (
-            <div className="text-destructive text-center">{state.error}</div>
-          )}
+      <div ref={scrollRef} className="flex-1 overflow-y-auto">
+        <div className="p-4">
+          <div className="space-y-4 max-w-3xl mx-auto relative">
+            {state.messages.length === 0 ? (
+              <div className="text-center text-muted-foreground py-8">
+                开始新的对话...
+              </div>
+            ) : (
+              state.messages.map((message) => (
+                <Card
+                  key={message.id}
+                  className={cn(
+                    "overflow-hidden relative",
+                    message.role === 'user'
+                      ? 'ml-12 bg-primary text-primary-foreground'
+                      : 'mr-12 bg-muted'
+                  )}
+                  style={{ maxWidth: 'calc(100% - 3rem)', zIndex: 0 }}
+                >
+                  <CardHeader className="py-3 px-4">
+                    <div className="font-medium text-sm">
+                      {message.role === 'user' ? user.username : 'AI助手'}
+                    </div>
+                  </CardHeader>
+                  <CardContent className="py-3 px-4 pt-0">
+                    <div className="whitespace-pre-wrap">
+                      {message.content || (message.role === 'assistant' && state.isLoading && '▋')}
+                    </div>
+                  </CardContent>
+                </Card>
+              ))
+            )}
+            {state.error && (
+              <div className="text-destructive text-center">{state.error}</div>
+            )}
+          </div>
         </div>
-      </ScrollArea>
+      </div>
       
-      <div className="border-t p-4">
+      <div className="border-t p-4 flex-shrink-0">
         <form onSubmit={sendMessage} className="flex gap-2 max-w-3xl mx-auto">
           <Input
             value={input}
