@@ -13,16 +13,20 @@
     "@radix-ui/react-icons": "^1.3.2",
     "@radix-ui/react-scroll-area": "^1.2.2",
     "@radix-ui/react-slot": "^1.1.1",
+    "@types/bcryptjs": "^2.4.6",
+    "@types/jsonwebtoken": "^9.0.7",
     "@types/node": "^22.10.2",
     "@types/react": "^19.0.2",
     "@types/react-dom": "^19.0.2",
     "ai": "^4.0.22",
     "autoprefixer": "^10.4.17",
+    "bcryptjs": "^2.4.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "eslint": "^9.17.0",
     "eslint-config-next": "^15.1.3",
     "framer-motion": "^11.15.0",
+    "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.469.0",
     "monichat": "file:",
     "next": "^15.1.3",
@@ -35,6 +39,7 @@
     "typescript": "^5.3.3"
   },
   "devDependencies": {
+    "dotenv": "^16.4.7",
     "eslint": "^9.17.0",
     "eslint-config-next": "^15.1.3"
   }

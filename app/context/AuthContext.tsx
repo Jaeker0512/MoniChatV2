@@ -1,18 +1,16 @@
 'use client'
 
-import React, { createContext, useContext, useState, useEffect } from 'react'
+import { createContext, useContext, useState, useEffect } from 'react'
+import type { AuthResponse } from '@/types/auth'
 
 interface User {
-  username: string;
-  isTestAccount: boolean;
+  username: string
 }
 
 interface AuthContextType {
-  user: User | null;
-  login: (username: string, password: string) => void;
-  logout: () => void;
-  loginAsTestUser: () => void;
-  clearChatHistory: () => void;
+  user: User | null
+  login: (username: string, password: string) => Promise<boolean>
+  logout: () => void
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
@@ -20,38 +18,53 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined)
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null)
 
+  // 在组件加载时检查本地存储的 token
   useEffect(() => {
-    const storedUser = localStorage.getItem('user')
-    if (storedUser) {
-      setUser(JSON.parse(storedUser))
+    const token = localStorage.getItem('token')
+    const savedUser = localStorage.getItem('user')
+    if (token && savedUser) {
+      try {
+        setUser(JSON.parse(savedUser))
+      } catch (error) {
+        console.error('Error parsing saved user:', error)
+      }
     }
   }, [])
 
-  const login = (username: string, password: string) => {
-    const user = { username, isTestAccount: false }
-    setUser(user)
-    localStorage.setItem('user', JSON.stringify(user))
-  }
+  const login = async (username: string, password: string) => {
+    try {
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password }),
+      })
 
-  const loginAsTestUser = () => {
-    const testUser = { username: 'TestUser', isTestAccount: true }
-    setUser(testUser)
-    localStorage.setItem('user', JSON.stringify(testUser))
-  }
+      const data: AuthResponse = await response.json()
 
-  const logout = () => {
-    setUser(null)
-    localStorage.removeItem('user')
-  }
+      if (data.success && data.token && data.user) {
+        localStorage.setItem('token', data.token)
+        localStorage.setItem('user', JSON.stringify(data.user))
+        setUser(data.user)
+        return true
+      }
 
-  const clearChatHistory = () => {
-    if (user) {
-      localStorage.removeItem(`chatHistory_${user.username}`)
+      return false
+    } catch (error) {
+      console.error('Login error:', error)
+      return false
     }
   }
 
+  const logout = () => {
+    localStorage.removeItem('token')
+    localStorage.removeItem('user')
+    setUser(null)
+  }
+
   return (
-    <AuthContext.Provider value={{ user, login, logout, loginAsTestUser, clearChatHistory }}>
+    <AuthContext.Provider value={{ user, login, logout }}>
       {children}
     </AuthContext.Provider>
   )

@@ -11,6 +11,7 @@ import {
 } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { Button } from './button'
+import { useEffect, useState } from 'react'
 
 const themes = [
   { id: 'light', icon: Sun, label: 'Light' },
@@ -23,6 +24,15 @@ const themes = [
 
 export function ThemeToggle() {
   const { theme, setTheme } = useTheme()
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  if (!mounted) {
+    return null
+  }
 
   return (
     <motion.div 
