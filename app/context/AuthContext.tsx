@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useState, useEffect } from 'react'
 import type { AuthResponse } from '@/types/auth'
+import { useRouter } from 'next/navigation'
 
 interface User {
   username: string
@@ -17,6 +18,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null)
+  const router = useRouter()
 
   // 在组件加载时检查本地存储的 token
   useEffect(() => {
@@ -61,6 +63,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     localStorage.removeItem('token')
     localStorage.removeItem('user')
     setUser(null)
+    router.push('/')
   }
 
   return (

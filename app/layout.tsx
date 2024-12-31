@@ -1,8 +1,6 @@
 import './globals.css'
 import { AuthProvider } from './context/AuthContext'
 import { ThemeProvider } from 'next-themes'
-import { MouseFollow } from './components/ui/mouse-follow'
-import { ThemeToggle } from './components/ui/theme-toggle'
 import { Inter } from 'next/font/google'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -27,8 +25,6 @@ export default function RootLayout({
           themes={['light', 'dark', 'winter', 'spring', 'summer', 'autumn']}
         >
           <AuthProvider>
-            <MouseFollow />
-            <ThemeToggle />
             {children}
           </AuthProvider>
         </ThemeProvider>

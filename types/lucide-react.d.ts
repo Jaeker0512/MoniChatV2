@@ -1,5 +1,5 @@
 declare module 'lucide-react' {
-  import { FC, SVGProps } from 'react'
+  import { FC, SVGProps, ComponentType } from 'react'
 
   interface IconProps extends SVGProps<SVGSVGElement> {
     size?: number | string
@@ -22,4 +22,16 @@ declare module 'lucide-react' {
   export const Flower2: Icon
   export const CloudSun: Icon
   export const CloudDrizzle: Icon
+  export const MessageSquare: Icon
+  export const User: Icon
+  export const Settings: Icon
+  export const Moon: Icon
+  export const Menu: Icon
+  export const Plus: Icon
+  export const PanelLeftClose: ComponentType<{
+    color?: string
+    size?: number | string
+    strokeWidth?: number | string
+    className?: string
+  }>
 } 

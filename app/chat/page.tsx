@@ -1,9 +1,5 @@
-import { Chat } from '../components/Chat'
+import { ChatLayout } from '../components/ChatLayout'
 
 export default function ChatPage() {
-  return (
-    <main className="flex min-h-screen flex-col">
-      <Chat />
-    </main>
-  )
+  return <ChatLayout />
 } 
