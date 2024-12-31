@@ -1,0 +1,47 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 0 0% 100%;
+  }
+
+  .winter {
+    --background: 210 100% 98%;
+    --foreground: 210 100% 20%;
+  }
+
+  .spring {
+    --background: 120 100% 98%;
+    --foreground: 120 100% 20%;
+  }
+
+  .summer {
+    --background: 45 100% 98%;
+    --foreground: 45 100% 20%;
+  }
+
+  .autumn {
+    --background: 30 100% 98%;
+    --foreground: 30 100% 20%;
+  }
+}
+
+@layer base {
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  .bg-grid-white\/10 {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='32' height='32' fill='none' stroke='rgb(255 255 255 / 0.1)'%3e%3cpath d='M0 .5H31.5V32'/%3e%3c/svg%3e");
+  }
+} 
