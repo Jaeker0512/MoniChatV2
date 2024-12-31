@@ -5,8 +5,10 @@ import { Button } from "../components/ui/button"
 import MushroomIcon from './MushroomIcon'
 import { useState } from 'react'
 import { motion } from 'framer-motion'
+import { useRouter } from 'next/navigation'
 
 export default function Login() {
+  const router = useRouter()
   const { login } = useAuth()
   const [isLoading, setIsLoading] = useState(false)
   const [username, setUsername] = useState('')
@@ -24,10 +26,13 @@ export default function Login() {
 
     try {
       const success = await login(username, password)
-      if (!success) {
+      if (success) {
+        router.push('/chat')
+      } else {
         setError('用户名或密码错误')
       }
     } catch (error) {
+      console.error('Login error:', error)
       setError('登录失败，请稍后重试')
     } finally {
       setIsLoading(false)
@@ -82,7 +87,7 @@ export default function Login() {
             <p className="text-red-300 text-sm text-center">{error}</p>
           )}
 
-          <Button 
+          <Button
             onClick={handleLogin}
             disabled={isLoading}
             className="w-full h-16 text-lg relative overflow-hidden group bg-white/20 hover:bg-white/30 transition-colors"
