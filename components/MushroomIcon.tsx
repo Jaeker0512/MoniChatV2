@@ -3,43 +3,71 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 
-export default function MushroomIcon() {
+interface MushroomIconProps {
+  className?: string
+}
+
+export default function MushroomIcon({ className }: MushroomIconProps) {
   const [isAwake, setIsAwake] = useState(false)
 
   return (
     <motion.svg
-      width="40"
-      height="40"
-      viewBox="0 0 40 40"
-      fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      className={className}
       onMouseEnter={() => setIsAwake(true)}
       onMouseLeave={() => setIsAwake(false)}
     >
-      {/* Mushroom cap */}
-      <path d="M5 20C5 11.7157 11.7157 5 20 5C28.2843 5 35 11.7157 35 20H5Z" fill="#FF6B6B" />
+      {/* 蘑菇帽 */}
+      <motion.path
+        d="M4 12C4 7.6 7.6 4 12 4s8 3.6 8 8H4z"
+        fill="currentColor"
+        animate={{
+          scale: isAwake ? 1.05 : 1,
+          originX: "50%",
+          originY: "100%"
+        }}
+        transition={{ duration: 0.3 }}
+      />
       
-      {/* Mushroom stem */}
-      <rect x="15" y="20" width="10" height="15" fill="#FFF3E0" />
+      {/* 蘑菇斑点 */}
+      <motion.circle cx="8" cy="8" r="1.2" fill="white" opacity="0.6" />
+      <motion.circle cx="12" cy="7" r="1" fill="white" opacity="0.6" />
+      <motion.circle cx="16" cy="8" r="1.2" fill="white" opacity="0.6" />
       
-      {/* Left eye */}
+      {/* 眼睛 */}
+      <motion.circle
+        cx="9"
+        cy="10"
+        r="0.8"
+        fill="white"
+        animate={{
+          scaleY: isAwake ? 1 : 0.2,
+        }}
+        transition={{ duration: 0.2 }}
+      />
       <motion.circle
         cx="15"
-        cy="15"
-        r="2"
-        fill="#333"
-        animate={{ scaleY: isAwake ? 1 : 0.1 }}
+        cy="10"
+        r="0.8"
+        fill="white"
+        animate={{
+          scaleY: isAwake ? 1 : 0.2,
+        }}
         transition={{ duration: 0.2 }}
       />
       
-      {/* Right eye */}
-      <motion.circle
-        cx="25"
-        cy="15"
-        r="2"
-        fill="#333"
-        animate={{ scaleY: isAwake ? 1 : 0.1 }}
-        transition={{ duration: 0.2 }}
+      {/* 蘑菇茎 */}
+      <motion.path
+        d="M10 12h4v8h-4z"
+        fill="currentColor"
+        animate={{
+          scale: isAwake ? 1.02 : 1,
+          originX: "50%",
+          originY: "0%"
+        }}
+        transition={{ duration: 0.3 }}
       />
     </motion.svg>
   )

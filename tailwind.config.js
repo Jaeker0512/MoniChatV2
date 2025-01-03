@@ -79,11 +79,28 @@ module.exports = {
   				to: {
   					height: 0
   				}
-  			}
+  			},
+  			twinkle: {
+  				'0%, 100%': { opacity: 1 },
+  				'50%': { opacity: 0.3 },
+  			},
+  			'space-float': {
+  				'0%, 100%': { transform: 'translate(0, 0)' },
+  				'50%': { transform: 'translate(100px, 50px)' },
+  			},
+  			'space-float-reverse': {
+  				'0%, 100%': { transform: 'translate(0, 0)' },
+  				'50%': { transform: 'translate(-100px, -50px)' },
+  			},
   		},
   		animation: {
   			'accordion-down': 'accordion-down 0.2s ease-out',
-  			'accordion-up': 'accordion-up 0.2s ease-out'
+  			'accordion-up': 'accordion-up 0.2s ease-out',
+  			'twinkle': 'twinkle 4s ease-in-out infinite',
+  			'twinkle-slow': 'twinkle 6s ease-in-out infinite',
+  			'space-float': 'space-float 20s ease-in-out infinite',
+  			'space-float-slow': 'space-float 30s ease-in-out infinite',
+  			'space-float-reverse': 'space-float-reverse 25s ease-in-out infinite',
   		}
   	}
   },
