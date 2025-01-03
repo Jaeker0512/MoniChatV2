@@ -1,5 +1,5 @@
 import './globals.css'
-import { AuthProvider } from './context/AuthContext'
+import { AuthProvider } from '@/context/AuthContext'
 import { ThemeProvider } from 'next-themes'
 import { Inter } from 'next/font/google'
 

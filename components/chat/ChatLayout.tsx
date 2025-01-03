@@ -1,20 +1,20 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { useAuth } from '../context/AuthContext'
+import { useAuth } from '@/context/AuthContext'
 import { Chat } from './Chat'
-import { Button } from './ui/button'
-import { ScrollArea } from './ui/scroll-area'
+import { Button } from '@/components/ui/button'
+import { ScrollArea } from '@/components/ui/scroll-area'
 import { LogOut, MessageCircle, MessageSquare, Settings, Moon, Sun, Menu, Plus, X } from 'lucide-react'
 import { useTheme } from 'next-themes'
-import { Avatar, AvatarFallback } from './ui/avatar'
+import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from './ui/dropdown-menu'
+} from '@/components/ui/dropdown-menu'
 import { motion } from 'framer-motion'
 import type { ChatMessage } from '@/types/chat'
 import { cn } from '@/lib/utils'

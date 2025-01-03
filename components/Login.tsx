@@ -1,7 +1,7 @@
 'use client'
 
-import { useAuth } from '../context/AuthContext'
-import { Button } from "../components/ui/button"
+import { useAuth } from '@/context/AuthContext'
+import { Button } from "@/components/ui/button"
 import MushroomIcon from './MushroomIcon'
 import { useState } from 'react'
 import { motion } from 'framer-motion'
