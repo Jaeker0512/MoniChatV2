@@ -211,18 +211,27 @@ export function Chat({ onClear, chatId, messages: initialMessages = [], onMessag
         </div>
       </div>
       
-      <div className="border-t p-4 flex-shrink-0">
-        <form onSubmit={sendMessage} className="flex gap-2 max-w-3xl mx-auto">
+      <div className="p-8 flex-shrink-0 relative">
+        <form onSubmit={sendMessage} className="flex gap-3 max-w-4xl mx-auto bg-white dark:bg-gray-900 rounded-2xl shadow-[0_0_15px_rgba(0,0,0,0.1)] dark:shadow-[0_0_15px_rgba(0,0,0,0.3)] p-3 relative">
           <Input
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="输入消息..."
+            placeholder="向 AI 助手提问..."
             disabled={state.isLoading}
-            className="flex-1"
+            className="flex-1 border-0 focus-visible:ring-0 focus-visible:ring-offset-0 bg-transparent text-base py-3 min-h-[24px] shadow-none"
+            style={{ outline: 'none', boxShadow: 'none' }}
           />
-          <Button type="submit" disabled={state.isLoading}>
-            <Send className="h-4 w-4" />
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button 
+              type="submit" 
+              disabled={state.isLoading} 
+              variant="ghost" 
+              size="icon" 
+              className="h-10 w-10 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+            >
+              <Send className="h-5 w-5" />
+            </Button>
+          </div>
         </form>
       </div>
     </div>

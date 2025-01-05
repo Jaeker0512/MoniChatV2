@@ -228,7 +228,7 @@ export function ChatLayout() {
       {/* 主内容区域 */}
       <div className="flex-1 flex flex-col bg-amber-50/30 dark:bg-gray-950 overflow-hidden relative z-0">
         {/* 顶部栏 */}
-        <div className="h-14 flex items-center justify-between px-4 flex-shrink-0 border-b">
+        <div className="h-14 flex items-center justify-between px-4 flex-shrink-0">
           <div className="font-medium text-gray-900 dark:text-gray-100">MoniChat</div>
           <div className="flex items-center gap-2">
             <DropdownMenu>
